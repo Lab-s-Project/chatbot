@@ -1,0 +1,11 @@
+{% from 'field-macro.html' import displayField %} {% extends
+"prelogin-layout.html" %} {% block title %}Page Not Found {% endblock %} {%
+block content %}
+<h2>죄송합니다, 찾고 있는 페이지가 없습니다!</h2>
+<br />
+<h4>아이디가 이미 있으면 <a href="{{url_for('login')}}">로그인</a> 하세요.</h4>
+<br />
+<hr />
+
+<p>계정이 없습니까? <a href="{{url_for('register')}}">계정만들기</a>.</p>
+{% endblock %}

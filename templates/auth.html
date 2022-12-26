@@ -1,0 +1,131 @@
+{% extends "prelogin-layout.html" %} {% block title%} {{ title }} {% endblock %}
+{% block content%}
+<div class="container auth-container">
+    <div class="row">
+        <form action="{{ request.path }}" method="POST" class="card-body">
+            {{ form.csrf_token }} {% with messages =
+            get_flashed_messages(with_categories=true) %}
+
+            <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+            {% if messages and request.path == '/register/' %} {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible fade show error-msg" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+
+            <!-- ============== TITLE ============= -->
+            <div class="title">
+                <h2>{{ head_title }}</h2>
+                <p>{{ head_text }}</p>
+            </div>
+            <!-- ============== End TITLE ============= -->
+
+
+            <!-- ============== BODY ============= -->
+            <!-- -------- Log In ------------ -->
+            <div class="form-group mt-3">
+                {{ form.student_id(class_="form-control", placeholder="아이디", autofocus=true)}}
+            </div>
+            {% for error in form.student_id.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%}
+
+            <!-- -------- Sign Up ------------ -->
+            {% if request.path == '/register/' %}
+            <div class="form-group mt-3">
+                {{ form.name(class_="form-control",placeholder="이름", autocomplete="off")}}
+            </div>
+            {% for error in form.name.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%} {% endif%}
+
+            <!-- -------- Sign Up ------------ -->
+            {% if request.path == '/register/' %}
+            <div class="form-group mt-3">
+                {{ form.phone_number(class_="form-control",placeholder="전화번호", autocomplete="off", type="number")}}
+            </div>
+            {% for error in form.phone_number.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%} {% endif%}
+
+            <!-- -------- Sign Up ------------ -->
+            {% if request.path == '/register/' %}
+            <div class="form-group mt-3">
+                {{ form.school_name(class_="form-control",placeholder="학교", autocomplete="off")}}
+            </div>
+            {% for error in form.school_name.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%} {% endif%}
+
+            <!-- -------- Sign Up ------------ -->
+            {% if request.path == '/register/' %}
+            <div class="form-group mt-3">
+                {{ form.grade(class_="form-control",placeholder="학년", autocomplete="off", type="number")}}
+            </div>
+            {% for error in form.grade.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%} {% endif%}
+
+            <!-- -------- Sign Up ------------ -->
+            {% if request.path == '/register/' %}
+            <div class="form-group mt-3">
+                {{ form.class_no(class_="form-control",placeholder="반", autocomplete="off", type="number")}}
+            </div>
+            {% for error in form.class_no.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%} {% endif%}
+
+            <!-- -------- Log In ------------ -->
+            <div class="form-group mt-3">
+                {{ form.password(class_="form-control",placeholder="비밀번호")}}
+            </div>
+            {% for error in form.password.errors %}
+            <div class="alert alert-warning alert-dismissible fade show error-msg" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor%}
+
+
+            <!-- ============== End Body ============= -->
+
+            <!-- ============== FOOTER ============= -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-warning">
+                    {{ btn_action }}
+                </button>
+            </div>
+
+            <hr />
+            <p>
+                {% if request.path != '/register/' %} 계정이 없습니까?
+                <a href="{{url_for('register')}}">계정만들기.</a>
+                {% else %} 아이디가 이미 있으면
+                <a href="{{url_for('login')}}">로그인</a> 하세요.
+                {% endif %}
+            </p>
+            <!-- ============== End FOOTER ============= -->
+
+        </form>
+    </div>
+</div>
+{% endblock %}

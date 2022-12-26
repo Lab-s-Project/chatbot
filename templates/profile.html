@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block title %}Profile{% endblock %} {% block
+content %}
+<div class="chatbox">
+  <div class="chatbox__support">
+    <img src="{{ url_for('static', filename='images/wave_bg.svg') }}" alt="">
+    <div class="container emp-profile">
+      <form method="post">
+        <div class="row justify-content-center">
+          <div class="col-md-12 profile-head">
+            <div class="profile-body">
+              <h5>기본 정보</h5>
+              <div class="row profile-info">
+                <div class="col-md-3">
+                  <p>이름</p>
+                </div>
+                <div class="col-md-9 profile-label">
+                  <p>{{ user.name }}</p>
+                </div>
+              </div>
+
+              <div class="row profile-info">
+                <div class="col-md-3">
+                  <p>아이디</p>
+                </div>
+                <div class="col-md-9 profile-label">
+                  <p>{{ user.student_id }}</p>
+                </div>
+              </div>
+
+              <div class="row profile-info">
+                <div class="col-md-3">
+                  <p>학년</p>
+                </div>
+                <div class="col-md-9 profile-label">
+                  <p>{{ user.grade }}</p>
+                </div>
+              </div>
+
+              <div class="row profile-info">
+                <div class="col-md-3">
+                  <p>반</p>
+                </div>
+                <div class="col-md-9 profile-label">
+                  <p>{{ user.class_no }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h5>연락처</h5>
+              <div class="row profile-info">
+                <div class="col-md-3">
+                  <p>전화번호</p>
+                </div>
+                <div class="col-md-9 profile-label">
+                  <p>{{ user.phone_number }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+a {
+    text-decoration: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+h1 {
+    color: #206ED2;
+}
+
+#main-section {
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+.container-wrap {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.jumbotron {
+    margin-bottom: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#image-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    float: left;
+    max-width: 100%;
+    max-height: 480px;
+}
+
+.card {
+    border: 0;
+}
+
+#righthand-side {
+    display: inline-block;
+    align-self: center;
+}
+
+h2 {
+    color: #5b9cfc;
+}
+
+#righthand-side p {
+    font-size: 0.8em;
+    color: grey;
+}
+
+@media (max-width: 588px) {
+    picture {
+        display: none;
+    }
+
+    /* #righthand-side {
+        padding-left: 1.5em;
+    } */
+}
+
+/* @media (min-width: 1000px) {
+    #righthand-side {
+        max-width: 50%;
+    }
+} */
+
+.formError {
+    list-style-type: none;
+    padding: 0px;
+    color: red;
+}
+
+​input[type='text']:focus,
+input[type='password']:focus {
+    border-color: #ffc107;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 10px #ffc107;
+}
+
+.auth-container {
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.auth-container::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.error-msg{
+    padding: 3px 0.5rem;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.error-msg .btn-close {
+    padding: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}

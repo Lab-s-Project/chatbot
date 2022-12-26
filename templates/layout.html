@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% block title %}{% endblock %} - Chatbot</title>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <!-- Custom css for chat pages -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles/chat_style.css') }}"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+
+    {% if request.endpoint == 'profile' %}
+    <link
+      href="{{ url_for('static', filename='styles/profile.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    {% endif %}
+
+    <script
+      src="https://kit.fontawesome.com/89c0fad386.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <!-- Flash error messages -->
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <p class="formError">{{ messages[0] }}</p>
+    {% endif %} {% endwith %}
+
+    <div class="s-layout">
+      <div class="s-layout__sidebar">
+        <a class="s-sidebar__trigger" href="#0">
+          <i class="fa fa-bars"></i>
+        </a>
+
+        <nav class="s-sidebar__nav">
+          <ul>
+            <li>
+              <a
+                class="{% if request.endpoint == 'home' %}--active{%endif %} else s-sidebar__nav-link"
+                href="{{url_for('home')}}"
+              >
+                <i class="fa-solid fa-house"></i><em>홈</em>
+              </a>
+            </li>
+            <li>
+              <a
+                class="{% if request.endpoint == 'profile' %}--active{%endif %} else s-sidebar__nav-link"
+                href="{{ url_for('profile')}}"
+              >
+                <i class="fa-solid fa-user"></i><em>내 프로필</em>
+              </a>
+            </li>
+            <li>
+              <a
+                id="logout-btn"
+                class="s-sidebar__nav-link"
+                href="{{ url_for('logout') }}"
+              >
+                <i class="fa-solid fa-right-from-bracket"></i
+                ><em>로그아웃</em></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="s-layout__content">
+        <!-- Flash error messages start -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- The messages, if any, are returned as a list. And not all redenring of the pages will have a message. So we put a condition to check whether the messages list is empty -->
+        {% if messages %}
+        <!-- We will set the class form our custom css file we had created earlier. And we want to see the first item in the list. -->
+        <div class="alert alert-{{ messages[0][0] }} " role="alert">
+          {{ messages[0][1] }}
+        </div>
+        <hr />
+        {% endif %} {% endwith %}
+        <!-- Flask error messages end -->
+
+        {% block content%} {% endblock %}
+      </div>
+    </div>
+
+    {# ================= SCRIPT =============== #}
+    <script>
+      $SCRIPT_ROOT = {{ request.script_root | tojson }};
+    </script>
+
+    <!-- Custom chat JS -->
+    <script src="{{ url_for('static', filename='scripts/chat_page.js') }}"></script>
+
+    <!-- Bootstrap -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome JS -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+      integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+      integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
