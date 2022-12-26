@@ -1,6 +1,6 @@
 FLASK_APP=routes.py
 FLASK_DEBUG=1
-FLASK_ENV=development
+FLASK_ENV=production
 FLASK_RUN_HOST=0.0.0.0
 FLASK_RUN_PORT=5500
 
