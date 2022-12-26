@@ -148,22 +148,22 @@ def get_history():
                 return jsonify(convo)
             except InvalidRequestError:
                 db.session.rollback()
-                flash(f"Something went wrong!", "danger")
+                flash("Something went wrong!", "danger")
             except IntegrityError:
                 db.session.rollback()
-                flash(f"User already exists!.", "warning")
+                flash("User already exists!.", "warning")
             except DataError:
                 db.session.rollback()
-                flash(f"Invalid Entry", "warning")
+                flash("Invalid Entry", "warning")
             except InterfaceError:
                 db.session.rollback()
-                flash(f"Error connecting to the database", "danger")
+                flash("Error connecting to the database", "danger")
             except DatabaseError:
                 db.session.rollback()
-                flash(f"Error connecting to the database", "danger")
+                flash("Error connecting to the database", "danger")
             except BuildError:
                 db.session.rollback()
-                flash(f"An error occured !", "danger")
+                flash("An error occured !", "danger")
 
     except Exception as e:
         print('Error! Code: {c}, Message, {m}'.format(c=type(e).__name__,
@@ -231,27 +231,27 @@ def register():
 
             db.session.add(newuser)
             db.session.commit()
-            flash(f"계정을 만들었습니다. 로그인 해주세요.", "success")
+            flash("계정을 만들었습니다. 로그인 해주세요.", "success")
             return redirect(url_for("login"))
 
         except InvalidRequestError:
             db.session.rollback()
-            flash(f"Something went wrong!", "danger")
+            flash("Something went wrong!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash(f"User already exists!.", "warning")
+            flash("User already exists!.", "warning")
         except DataError:
             db.session.rollback()
-            flash(f"Invalid Entry", "warning")
+            flash("Invalid Entry", "warning")
         except InterfaceError:
             db.session.rollback()
-            flash(f"Error connecting to the database", "danger")
+            flash("Error connecting to the database", "danger")
         except DatabaseError:
             db.session.rollback()
-            flash(f"Error connecting to the database", "danger")
+            flash("Error connecting to the database", "danger")
         except BuildError:
             db.session.rollback()
-            flash(f"An error occurred !", "danger")
+            flash("An error occurred !", "danger")
     return render_template("auth.html",
                            form=form,
                            title="생성하기",
