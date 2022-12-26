@@ -148,13 +148,13 @@ def get_history():
                 return jsonify(convo)
             except InvalidRequestError:
                 db.session.rollback()
-                flash(f"System error", "danger")
+                flash(f"Something went wrong!", "danger")
             except IntegrityError:
                 db.session.rollback()
-                flash(f"사용자가 이미 존재 합니다.", "warning")
+                flash(f"User already exists!.", "warning")
             except DataError:
                 db.session.rollback()
-                flash(f"부적합한 입력", "warning")
+                flash(f"Invalid Entry", "warning")
             except InterfaceError:
                 db.session.rollback()
                 flash(f"Error connecting to the database", "danger")
@@ -163,7 +163,7 @@ def get_history():
                 flash(f"Error connecting to the database", "danger")
             except BuildError:
                 db.session.rollback()
-                flash(f"오류가 발생했습니다.!", "danger")
+                flash(f"An error occured !", "danger")
 
     except Exception as e:
         print('Error! Code: {c}, Message, {m}'.format(c=type(e).__name__,
@@ -236,13 +236,13 @@ def register():
 
         except InvalidRequestError:
             db.session.rollback()
-            flash(f"System error", "danger")
+            flash(f"Something went wrong!", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash(f"사용자가 이미 존재 합니다.", "warning")
+            flash(f"User already exists!.", "warning")
         except DataError:
             db.session.rollback()
-            flash(f"부적합한 입력", "warning")
+            flash(f"Invalid Entry", "warning")
         except InterfaceError:
             db.session.rollback()
             flash(f"Error connecting to the database", "danger")
@@ -251,7 +251,7 @@ def register():
             flash(f"Error connecting to the database", "danger")
         except BuildError:
             db.session.rollback()
-            flash(f"An error occurred!", "danger")
+            flash(f"An error occurred !", "danger")
     return render_template("auth.html",
                            form=form,
                            title="생성하기",
