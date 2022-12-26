@@ -13,6 +13,8 @@ from werkzeug.routing import BuildError
 
 from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 
+from passlib.hash import sha256_crypt
+
 from flask_login import (
     UserMixin,
     login_user,
@@ -182,7 +184,7 @@ def login():
                 try:
                     user = User.query.filter_by(
                         student_id=form.student_id.data).first()
-                    if check_password_hash(user.password, form.password.data):
+                    if sha256_crypt.verify(form.password.data, user.password):
                         login_user(user)
                         return redirect(url_for('home'))
                     else:
@@ -226,7 +228,7 @@ def register():
                 phone_number=phone_number,
                 grade=grade.lstrip("0"),
                 class_no=class_no.lstrip("0"),
-                password=bcrypt.generate_password_hash(password),
+                password=sha256_crypt.hash(password),
             )
 
             db.session.add(newuser)
