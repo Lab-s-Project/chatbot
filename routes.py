@@ -148,7 +148,7 @@ def get_history():
                 return jsonify(convo)
             except InvalidRequestError:
                 db.session.rollback()
-                flash(f"시스템 오류입니다. 나중에 다시 시도해 주세요.", "danger")
+                flash(f"System error", "danger")
             except IntegrityError:
                 db.session.rollback()
                 flash(f"사용자가 이미 존재 합니다.", "warning")
@@ -236,7 +236,7 @@ def register():
 
         except InvalidRequestError:
             db.session.rollback()
-            flash(f"시스템 오류입니다. 나중에 다시 시도해 주세요.", "danger")
+            flash(f"System error", "danger")
         except IntegrityError:
             db.session.rollback()
             flash(f"사용자가 이미 존재 합니다.", "warning")
