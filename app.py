@@ -23,7 +23,7 @@ login_manager.session_protection = "strong"
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
-db = SQLAlchemy()
+db = SQLAlchemy(session_options={'autocommit': True})
 migrate = Migrate()
 bcrypt = Bcrypt()
 
@@ -42,9 +42,13 @@ def create_app():
         'SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{_username}:%s@{_host}:{_port}/{_db_name}' % quote(
             _password)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    app.config['SQLALCHEMY_POOL_SIZE'] = 1
+    app.config['SQLALCHEMY_MAX_OVERFLOW'] = 0
 
     login_manager.init_app(app)
     db.init_app(app)
+    
+    print("Database connected")
     migrate.init_app(app, db)
     bcrypt.init_app(app)
 

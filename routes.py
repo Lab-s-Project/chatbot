@@ -44,6 +44,11 @@ def session_handler():
     app.permanent_session_lifetime = timedelta(days=3)
 
 
+def close_session(session):
+    session.close()
+    print("Session closed")
+
+
 @app.route("/", strict_slashes=False)
 @app.route("/home", methods=("GET", "POST"), strict_slashes=False)
 def home():
@@ -57,6 +62,7 @@ def home():
     except Exception as e:
         print("Error : ", e)
     finally:
+        close_session(db.session)
         pass
 
 
@@ -75,10 +81,14 @@ def profile():
                 return render_template("profile.html", user=user)
             except Exception as e:
                 flash(e, "danger")
+            
+            finally:
+                close_session(db.session)
 
     except Exception as e:
         print(e)
     finally:
+        close_session(db.session)
         pass
 
 
@@ -107,6 +117,9 @@ def storeMessage(id, _type, text):
     chat = Chat(user_id=user_id, type=type, text=text)
     db.session.add(chat)
     db.session.commit()
+    
+    close_session(db.session)
+    
     return None
 
 
@@ -118,6 +131,8 @@ def storeResponse(id, _type, text):
     chat = Chat(user_id=user_id, type=type, text=text)
     db.session.add(chat)
     db.session.commit()
+    
+    close_session(db.session)
     return None
 
 
@@ -150,13 +165,13 @@ def get_history():
                 return jsonify(convo)
             except InvalidRequestError:
                 db.session.rollback()
-                flash("Something went wrong!", "danger")
+                flash("시스템 오류입니다. 나중에 다시 시도해 주세요.", "danger")
             except IntegrityError:
                 db.session.rollback()
-                flash("User already exists!.", "warning")
+                flash("사용자가 이미 존재 합니다", "warning")
             except DataError:
                 db.session.rollback()
-                flash("Invalid Entry", "warning")
+                flash("잘못된 항목", "warning")
             except InterfaceError:
                 db.session.rollback()
                 flash("Error connecting to the database", "danger")
@@ -165,7 +180,11 @@ def get_history():
                 flash("Error connecting to the database", "danger")
             except BuildError:
                 db.session.rollback()
-                flash("An error occured !", "danger")
+                flash("An error occurred!", "danger")
+            
+            finally:
+                close_session(db.session)
+                pass
 
     except Exception as e:
         print('Error! Code: {c}, Message, {m}'.format(c=type(e).__name__,
@@ -191,6 +210,9 @@ def login():
                         flash("잘못된 아이디 또는 비밀번호입니다.", "danger")
                 except Exception as e:
                     flash(e, "danger")
+                
+                finally:
+                    close_session(db.session)
 
             return render_template("auth.html",
                                    form=form,
@@ -203,6 +225,7 @@ def login():
         print('Error! Code: {c}, Message, {m}'.format(c=type(e).__name__,
                                                       m=str(e)))
     finally:
+        close_session(db.session)
         pass
 
 
@@ -238,13 +261,13 @@ def register():
 
         except InvalidRequestError:
             db.session.rollback()
-            flash("Something went wrong!", "danger")
+            flash("시스템 오류입니다. 나중에 다시 시도해 주세요.", "danger")
         except IntegrityError:
             db.session.rollback()
-            flash("User already exists!.", "warning")
+            flash("사용자가 이미 존재 합니다", "warning")
         except DataError:
             db.session.rollback()
-            flash("Invalid Entry", "warning")
+            flash("잘못된 항목", "warning")
         except InterfaceError:
             db.session.rollback()
             flash("Error connecting to the database", "danger")
@@ -254,6 +277,11 @@ def register():
         except BuildError:
             db.session.rollback()
             flash("An error occurred !", "danger")
+        
+        finally:
+            close_session(db.session)
+            pass
+        
     return render_template("auth.html",
                            form=form,
                            title="생성하기",
@@ -271,17 +299,17 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("error/404.html"), 404
+    return render_template("404.html"), 404
 
 
 @app.errorhandler(405)
 def method_not_found(e):
-    return render_template("error/405.html"), 405
+    return render_template("405.html"), 405
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template("error/500.html"), 500
+    return render_template("500.html"), 500
 
 
 if __name__ == "__main__":
