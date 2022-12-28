@@ -23,7 +23,7 @@ login_manager.session_protection = "strong"
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
-db = SQLAlchemy(session_options={'autocommit': True})
+db = SQLAlchemy(session_options={'autocommit': False})
 migrate = Migrate()
 bcrypt = Bcrypt()
 
