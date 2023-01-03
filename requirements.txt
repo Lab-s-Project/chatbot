@@ -18,6 +18,7 @@ MarkupSafe==2.0.1
 pandas==1.5.2
 passlib==1.7.4
 pycparser==2.20
+pymysql==1.0.2
 python-dateutil==2.8.2
 python-editor==1.0.4
 python-dotenv==0.21.0
