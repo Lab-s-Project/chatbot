@@ -1,4 +1,5 @@
 import datetime
+from datetime import timezone
 from app import db
 from flask_login import UserMixin
 
@@ -17,15 +18,15 @@ class User(UserMixin, db.Model):
     class_no = db.Column(db.Integer, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime,
-                           default=datetime.datetime.now(),
+                           default=datetime.datetime.now(timezone.utc),
                            nullable=False)
     updated_at = db.Column(db.DateTime,
-                           default=datetime.datetime.now(),
+                           default=datetime.datetime.now(timezone.utc),
                            nullable=False)
     status = db.Column(db.Integer, default=1, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.student_id
+        return f"User('{self.student_id}', '{self.name}', '{self.phone_number}', '{self.school_name}', '{self.grade}', '{self.class_no}', '{self.password}')"
 
 
 class Chat(db.Model):
@@ -37,5 +38,5 @@ class Chat(db.Model):
     type = db.Column(db.String(50), nullable=False)
     text = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime,
-                           default=datetime.datetime.now(),
+                           default=datetime.datetime.now(timezone.utc),
                            nullable=False)
