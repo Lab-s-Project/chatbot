@@ -46,7 +46,6 @@ def session_handler():
 
 def close_session(session):
     session.close()
-    print("Session closed")
 
 
 @app.route("/", strict_slashes=False)
